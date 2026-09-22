@@ -13,7 +13,7 @@
    ============================================================ */
 
 window.SE_CONFIG = {
-  demo: false,
+  demo: true,
 
     supabaseUrl: 'https://kyfnfapfaeazivlvtmhl.supabase.co',          // e.g. 'https://abcdefgh.supabase.co'
   supabaseAnonKey: 'sb_publishable_BZ5grx2BwP3WT154LFSOLA_qWHF7eIJ',      // Project settings → API → anon public
