@@ -158,36 +158,26 @@ group by student_id;
 --  A student's token must never be able to read another student.
 -- ============================================================
 
--- security definer: these run as the function owner and so read
--- `profiles` WITHOUT re-triggering profiles' own RLS policy (which
--- itself calls auth_role()). Without this every policy check below
--- recurses back into profiles' RLS, which is what made role lookups
--- and page loads slow.
 create or replace function auth_role() returns text
-language sql stable security definer set search_path = public as $$
+language sql stable as $$
   select role from profiles where id = auth.uid()
 $$;
 
 create or replace function auth_student_id() returns text
-language sql stable security definer set search_path = public as $$
+language sql stable as $$
   select student_id from profiles where id = auth.uid()
 $$;
 
 create or replace function auth_teacher_id() returns text
-language sql stable security definer set search_path = public as $$
+language sql stable as $$
   select teacher_id from profiles where id = auth.uid()
 $$;
 
 -- classes this signed-in teacher holds
 create or replace function auth_teacher_classes() returns setof text
-language sql stable security definer set search_path = public as $$
+language sql stable as $$
   select class_id from teacher_classes where teacher_id = auth_teacher_id()
 $$;
-
--- indexes the RLS policies above filter on every request
-create index if not exists students_class_id       on students (class_id);
-create index if not exists marks_student_id         on marks (student_id);
-create index if not exists fee_instalments_student   on fee_instalments (student_id);
 
 alter table classes         enable row level security;
 alter table teachers        enable row level security;

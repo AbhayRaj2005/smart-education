@@ -85,7 +85,7 @@ Deno.serve(async (req) => {
     let aiResults: Record<number, { score: number; feedback: string }> = {};
 
     if (toGrade.length) {
-      const key = (Deno.env.get('GEMINI_API_KEY') || '').trim();
+      const key = (Deno.env.get('GEMINI_API_KEY_STUDENT') || Deno.env.get('GEMINI_API_KEY') || '').trim();
       if (!key) {
         // no key configured \u2014 fail written answers open with a neutral note rather
         // than blocking the whole submission

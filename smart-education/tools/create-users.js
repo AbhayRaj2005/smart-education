@@ -18,15 +18,6 @@
    your machine or in Render/Vercel env vars — never in the browser.
    ============================================================ */
 
-try {
-  // Loads variables from a local .env file if present (optional).
-  // If the 'dotenv' package isn't installed, this is silently skipped
-  // and env vars can still be passed in the normal way.
-  require('dotenv').config();
-} catch (e) {
-  // dotenv not installed — that's fine, just continue.
-}
-
 const { createClient } = require('@supabase/supabase-js');
 
 const URL = process.env.SUPABASE_URL;

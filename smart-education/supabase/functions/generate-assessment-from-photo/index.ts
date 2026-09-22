@@ -87,7 +87,7 @@ Deno.serve(async (req) => {
     const { data: cls } = await admin.from('classes').select('grade').eq('id', classId).single();
     if (!cls) return json({ error: 'Class not found' }, 404);
 
-    const key = (Deno.env.get('GEMINI_API_KEY') || '').trim();
+    const key = (Deno.env.get('GEMINI_API_KEY_TEACHER') || Deno.env.get('GEMINI_API_KEY') || '').trim();
     if (!key) return json({ error: 'The AI question generator is not set up yet \\u2014 GEMINI_API_KEY is missing.' }, 500);
 
     const schema =

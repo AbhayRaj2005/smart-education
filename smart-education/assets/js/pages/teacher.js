@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (view === 'gradebook') return Gradebook.renderEntry(host, { classes: myClasses, subject: teacher.subject });
       if (view === 'assessment') return Assessment.renderTeacher(host, { classes: myClasses, subject: teacher.subject, teacherId: teacher.id });
       if (view === 'students') return StudentRecord.renderRoster(host, { classes: myClasses });
-      if (view === 'syllabus') return Syllabus.render(host, { classes: myClasses, subject: teacher.subject });
+      if (view === 'syllabus') return Syllabus.render(host, { classes: myClasses, subject: teacher.subject, canUpload: true });
       if (view === 'timetable') return Timetable.render(host, { classes: myClasses, teacherId: teacher.id, modes: ['teacher', 'class'] });
       if (view === 'notices') return Notices.renderManager(host, { user: user, classes: myClasses, schoolWide: false });
     }

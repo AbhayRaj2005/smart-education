@@ -100,7 +100,7 @@ Deno.serve(async (req) => {
       focusLine = 'No syllabus chapters are listed yet, so write general Grade ' + cls.grade + ' ' + subject + ' questions.';
     }
 
-    const key = (Deno.env.get('GEMINI_API_KEY') || '').trim();
+    const key = (Deno.env.get('GEMINI_API_KEY_TEACHER') || Deno.env.get('GEMINI_API_KEY') || '').trim();
     if (!key) return json({ error: 'The AI question generator is not set up yet \u2014 GEMINI_API_KEY is missing.' }, 500);
     if (!key.startsWith('AIza') && !key.startsWith('AQ.')) {
       return json({ error: 'The AI key does not look like a Gemini API key. Get one from https://aistudio.google.com/apikey' }, 500);

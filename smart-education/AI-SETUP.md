@@ -18,6 +18,34 @@ If the AI tutor works today, you're done — skip to step 2. If not, follow
 `TUTOR-SETUP.md` first (get a key from https://aistudio.google.com/apikey,
 `supabase secrets set GEMINI_API_KEY=...`).
 
+### Optional: split load across two keys
+
+One free-tier Gemini key has a shared per-minute request quota across
+*everything* that uses it — teacher paper-generation and student tutor/
+grading/practice included. If that quota is getting hit (errors like
+`429` / "quota exceeded" / requests hanging), get a **second** free key
+from https://aistudio.google.com/apikey and set both:
+
+```bash
+supabase secrets set GEMINI_API_KEY_TEACHER=AIzaSy...   # generate-assessment, generate-assessment-from-photo
+supabase secrets set GEMINI_API_KEY_STUDENT=AIzaSy...   # ask-tutor, grade-submission, generate-skill-quiz
+```
+
+Each function checks its role-specific key first and falls back to the
+plain `GEMINI_API_KEY` if the specific one isn't set — so this is
+optional and backwards-compatible. You do NOT need to unset the old
+`GEMINI_API_KEY`; keep it as the shared fallback and just add the two
+above when you're ready to split the load. Redeploy after setting new
+secrets:
+
+```bash
+supabase functions deploy ask-tutor
+supabase functions deploy generate-assessment
+supabase functions deploy generate-assessment-from-photo
+supabase functions deploy generate-skill-quiz
+supabase functions deploy grade-submission
+```
+
 ## 2. Run the new schema
 
 In the Supabase dashboard → SQL editor, run (in order, only the ones you

@@ -571,6 +571,12 @@
     return callFunction('generate-assessment-from-photo', { classId, subject, chapterTitle, imageBase64, mimeType });
   }
 
+  /* teacher/admin: photo or PDF of a syllabus -> Gemini reads it and
+     replaces that class+subject's syllabus chapter list */
+  function generateSyllabusFromPhoto(classId, subject, fileBase64, mimeType) {
+    return callFunction('generate-syllabus-from-photo', { classId, subject, fileBase64, mimeType });
+  }
+
   /* teacher: build a question paper by hand, no AI involved. Saved as a
      draft ('manual' source) exactly like an AI one, so publish/close/results
      all work the same way afterwards. */
@@ -736,6 +742,15 @@
     if (error) throw new Error(error.message);
   }
 
+  /* admin: auto-build the whole school's timetable from the resource
+     numbers admin gives (buildings, labs, classrooms, periods/day) via
+     the generate-timetable Edge Function \u2014 a deterministic scheduler,
+     no AI involved (a real constraint solver is more reliable here than
+     an LLM guessing a grid). */
+  function generateTimetable(buildings, labs, classrooms, periodsPerDay) {
+    return callFunction('generate-timetable', { buildings, labs, classrooms, periodsPerDay });
+  }
+
   /* ---------- public API ---------- */
 
   global.Backend = {
@@ -786,7 +801,9 @@
     postNotice,
     deleteNotice,
     saveTimetableSlot,
-    clearTimetableSlot
+    clearTimetableSlot,
+    generateTimetable,
+    generateSyllabusFromPhoto
   };
 
 })(window);

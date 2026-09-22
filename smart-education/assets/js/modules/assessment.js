@@ -84,7 +84,7 @@
       /* ---- photo panel ---- */
       '<div id="asPanelPhoto" class="stack-top" hidden>' +
         '<p class="meta">Upload a photo of an existing question paper \u2014 the AI reads it and builds a draft paper from what it finds.</p>' +
-        '<input type="file" id="asPhotoFile" accept="image/*" capture="environment">' +
+        '<input type="file" id="asPhotoFile" accept="image/*">' +
         '<div class="btn-row stack-top">' +
           '<button type="button" id="asScanPhoto" class="btn btn-primary btn-sm">Scan &amp; generate</button>' +
         '</div>' +
@@ -269,12 +269,41 @@
       photoMsg.textContent = text;
       photoMsg.style.color = isError ? '#B3261E' : '';
     }
+    /* Phone camera photos are often 8-12MB at 4000px+ \u2014 that's what was
+       making uploads crawl (or fail outright against the Edge Function's
+       size limit). Before sending, we scale the image down to a sane max
+       dimension and re-encode as JPEG, which text (question papers) reads
+       from just fine at a fraction of the size. */
     function fileToBase64(file) {
+      const MAX_DIM = 1280;
+      const JPEG_QUALITY = 0.75;
+
       return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(String(reader.result).split(',')[1] || '');
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
+        const url = URL.createObjectURL(file);
+        const img = new Image();
+        img.onload = () => {
+          try {
+            let { width, height } = img;
+            if (width > MAX_DIM || height > MAX_DIM) {
+              const scale = MAX_DIM / Math.max(width, height);
+              width = Math.round(width * scale);
+              height = Math.round(height * scale);
+            }
+            const canvas = document.createElement('canvas');
+            canvas.width = width;
+            canvas.height = height;
+            const c2d = canvas.getContext('2d');
+            c2d.drawImage(img, 0, 0, width, height);
+            const dataUrl = canvas.toDataURL('image/jpeg', JPEG_QUALITY);
+            URL.revokeObjectURL(url);
+            resolve(dataUrl.split(',')[1] || '');
+          } catch (e) {
+            URL.revokeObjectURL(url);
+            reject(e);
+          }
+        };
+        img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('Could not read that image \u2014 try another photo.')); };
+        img.src = url;
       });
     }
     gen.querySelector('#asScanPhoto').addEventListener('click', () => {
@@ -288,11 +317,14 @@
 
       const btn = gen.querySelector('#asScanPhoto');
       btn.disabled = true;
-      showPhotoMsg('Reading the photo \u2014 your assessment is being prepared\u2026', false);
-
-      fileToBase64(file).then(base64 =>
-        Backend.generateAssessmentFromPhoto(classId, subject, chapterTitle, base64, file.type || 'image/jpeg')
-      ).then(result => {
+      showPhotoMsg('Photo uploading\u2026', false);
+      fileToBase64(file).then(base64 => {
+        showPhotoMsg('AI is reading the photo and writing the paper \u2014 usually 10\u201320 seconds, please wait\u2026', false);
+        /* fileToBase64 always re-encodes to JPEG now (see above), so the
+           mime type sent to the server is always 'image/jpeg' regardless
+           of what the original photo was. */
+        return Backend.generateAssessmentFromPhoto(classId, subject, chapterTitle, base64, 'image/jpeg');
+      }).then(result => {
         showPhotoMsg('Draft paper ready from the photo: "' + result.title + '" (' + result.count + ' questions). Review it below before publishing.', false);
         UI.toast('\u2728', 'Paper generated from photo', result.title, 'success');
         fileInput.value = '';

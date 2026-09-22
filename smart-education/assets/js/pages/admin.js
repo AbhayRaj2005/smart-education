@@ -28,6 +28,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       { view: 'students', key: 'nav.students' },
       { view: 'attendance', key: 'nav.attendance' },
       { view: 'fees', key: 'nav.fees' },
+      { view: 'syllabus', key: 'nav.syllabus' },
       { view: 'timetable', key: 'nav.timetable' },
       { view: 'notices', key: 'nav.notices' },
       { view: 'sms', key: 'nav.smslog' },
@@ -39,7 +40,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (view === 'students') return StudentRecord.renderRoster(host, {});
       if (view === 'attendance') return Attendance.renderRegister(host);
       if (view === 'fees') return Fees.renderLedger(host);
-      if (view === 'timetable') return Timetable.render(host, { editable: true, pickTeacher: true, modes: ['class', 'teacher'] });
+      if (view === 'syllabus') return Syllabus.render(host, { classes: SCHOOL.classes, canUpload: true, isAdmin: true });
+      if (view === 'timetable') return Timetable.render(host, { editable: true, pickTeacher: true, modes: ['class', 'teacher'], autoGenerate: true });
       if (view === 'notices') return Notices.renderManager(host, { user: user, classes: SCHOOL.classes, schoolWide: true });
       if (view === 'sms') return SMS.renderLog(host);
       if (view === 'loginlog') return LoginLog.renderLog(host);

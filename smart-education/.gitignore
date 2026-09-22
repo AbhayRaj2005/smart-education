@@ -1,7 +1,8 @@
-.env
-.env.*
-!.env.example
-node_modules/
-supabase/.temp/
-*.log
 .vercel
+.env*
+node_modules/
+
+supabase/.temp/
+setup-supabase-all.sh
+
+supabase/.temp/

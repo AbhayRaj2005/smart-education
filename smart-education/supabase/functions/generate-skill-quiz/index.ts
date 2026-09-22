@@ -69,7 +69,7 @@ Deno.serve(async (req) => {
     const { data: cls } = await admin.from('classes').select('grade').eq('id', student?.class_id).single();
     const grade = cls?.grade || '';
 
-    const key = (Deno.env.get('GEMINI_API_KEY') || '').trim();
+    const key = (Deno.env.get('GEMINI_API_KEY_STUDENT') || Deno.env.get('GEMINI_API_KEY') || '').trim();
     if (!key || (!key.startsWith('AIza') && !key.startsWith('AQ.'))) {
       return json({ error: 'AI practice questions are not set up yet' }, 500);
     }

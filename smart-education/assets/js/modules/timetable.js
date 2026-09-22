@@ -285,6 +285,59 @@
 
   /* ---------------- view ---------------- */
 
+  /* ---------------- auto-generate (admin) ---------------- */
+
+  function openGenerateModal(onDone) {
+    const backdrop = UI.el('div', 'se-modal-backdrop');
+    backdrop.innerHTML =
+      '<div class="se-modal" role="dialog" aria-modal="true">' +
+        '<button type="button" class="se-modal-close" aria-label="Close">&times;</button>' +
+        '<h2>Auto-generate timetable</h2>' +
+        '<p class="tt-edit-sub">Batao school mein kitne resources hain — AI/algorithm baaki khud decide karega (shifts, kaunsi class kis shift mein, kaun sa teacher kab free hai, labs kab milenge). Isse <b>poore school ka timetable overwrite ho jayega</b>.</p>' +
+        '<div class="se-modal-error" id="ttGenErr" hidden></div>' +
+        '<div class="se-form-grid">' +
+          '<div><label for="ttGenBuild">Buildings</label><input id="ttGenBuild" type="number" min="1" max="50" value="1"></div>' +
+          '<div><label for="ttGenLabs">Labs</label><input id="ttGenLabs" type="number" min="0" max="50" value="2"></div>' +
+          '<div><label for="ttGenRooms">Classrooms</label><input id="ttGenRooms" type="number" min="1" max="500" value="' + SCHOOL.classes.length + '"></div>' +
+          '<div><label for="ttGenPPD">Periods / day</label><input id="ttGenPPD" type="number" min="3" max="12" value="7"></div>' +
+        '</div>' +
+        '<div class="se-modal-actions">' +
+          '<button type="button" class="btn btn-ghost btn-sm" id="ttGenCancel">Cancel</button>' +
+          '<button type="button" class="btn btn-marigold btn-sm" id="ttGenSave">Generate</button>' +
+        '</div>' +
+      '</div>';
+    document.body.appendChild(backdrop);
+    requestAnimationFrame(() => backdrop.classList.add('open'));
+
+    const $ = id => backdrop.querySelector('#' + id);
+    const err = $('ttGenErr');
+
+    function close() { backdrop.classList.remove('open'); setTimeout(() => backdrop.remove(), 180); }
+    $('ttGenCancel').addEventListener('click', close);
+    backdrop.addEventListener('click', e => { if (e.target === backdrop) close(); });
+
+    $('ttGenSave').addEventListener('click', () => {
+      err.hidden = true;
+      const buildings = parseInt($('ttGenBuild').value) || 1;
+      const labs = parseInt($('ttGenLabs').value) || 0;
+      const classrooms = parseInt($('ttGenRooms').value) || SCHOOL.classes.length;
+      const periodsPerDay = parseInt($('ttGenPPD').value) || 7;
+      const btn = $('ttGenSave');
+      btn.disabled = true; btn.textContent = 'Generating…';
+      Backend.generateTimetable(buildings, labs, classrooms, periodsPerDay)
+        .then(result => {
+          close();
+          const msg = result.classesScheduled + ' classes scheduled across ' + result.shiftsUsed + ' shift(s)' +
+            (result.warnings && result.warnings.length ? ' — ' + result.warnings.length + ' warning(s), check console' : '');
+          if (result.warnings && result.warnings.length) console.warn('Timetable warnings:', result.warnings);
+          UI.toast('✅', 'Timetable generated', msg, 'success');
+          onDone();
+        })
+        .catch(e => { err.textContent = e.message || 'Could not generate the timetable.'; err.hidden = false; })
+        .finally(() => { btn.disabled = false; btn.textContent = 'Generate'; });
+    });
+  }
+
   function render(container, opts) {
     opts = opts || {};
     const allowed = opts.classes && opts.classes.length ? opts.classes : SCHOOL.classes;
@@ -324,6 +377,13 @@
           row.appendChild(b);
         });
         ctl.appendChild(row);
+      }
+
+      if (opts.autoGenerate) {
+        const genBtn = UI.el('button', 'btn btn-outline btn-sm', '⚙ Auto-generate timetable');
+        genBtn.type = 'button';
+        genBtn.addEventListener('click', () => openGenerateModal(paint));
+        ctl.appendChild(genBtn);
       }
 
       if (state.mode === 'class' && !opts.lockClass) {

@@ -75,7 +75,7 @@ Deno.serve(async (req) => {
     // generateContent endpoint via the x-goog-api-key header:
     //   - "AIzaSy..." (legacy "Standard" key)
     //   - "AQ.Ab..."  (current "Auth" key — what new keys look like now)
-    const key = (Deno.env.get('GEMINI_API_KEY') || '').trim();
+    const key = (Deno.env.get('GEMINI_API_KEY_STUDENT') || Deno.env.get('GEMINI_API_KEY') || '').trim();
     if (!key) {
       return json({ error: 'The AI tutor is not set up yet — GEMINI_API_KEY is missing.' }, 500);
     }
