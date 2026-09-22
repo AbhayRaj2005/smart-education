@@ -1,0 +1,13 @@
+{
+  "name": "smart-education",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Smart Education backend setup scripts",
+  "scripts": {
+    "create-users": "node tools/create-users.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.0",
+    "dotenv": "^16.4.5"
+  }
+}

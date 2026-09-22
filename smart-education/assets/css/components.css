@@ -1,0 +1,142 @@
+/* ============================================================
+   Smart Education — COMPONENTS module
+   Reusable dashboard widgets shared across admin/teacher/student:
+   cards, kpi tiles, tables, tags, chips, forms, timetable, bars.
+   ============================================================ */
+
+.card{ background: var(--card); border:1px solid var(--border); border-radius: var(--radius-m); }
+.card-pad{ padding: 20px 22px; }
+.card-head{ display:flex; align-items:center; justify-content:space-between; padding: 18px 22px; border-bottom: 1px solid var(--border); }
+.card-head h3{ font-size:16px; margin:0; }
+
+.kpi-row{ display:grid; grid-template-columns: repeat(4,1fr); gap:18px; margin-bottom: 22px; }
+@media (max-width: 980px){ .kpi-row{ grid-template-columns: 1fr 1fr; } }
+.kpi{ padding: 20px 20px; }
+.kpi span.label{ font-size:12.5px; color: var(--text-soft); display:block; margin-bottom:8px; }
+.kpi strong{ font-family:'Fraunces',serif; font-size: 27px; color: var(--ink); display:block; }
+.kpi .delta{ font-size:12px; font-weight:600; margin-top:6px; display:inline-block; }
+.delta.up{ color: var(--chalk-dk); }
+.delta.down{ color: var(--margin-red); }
+
+.two-col{ display:grid; grid-template-columns: 1.4fr 1fr; gap: 20px; }
+@media (max-width: 980px){ .two-col{ grid-template-columns: 1fr; } }
+
+table{ width:100%; min-width:560px; border-collapse: collapse; font-size: 14px; }
+th{ text-align:left; font-size:12px; color: var(--text-soft); font-weight:600; padding: 10px 22px; border-bottom:1px solid var(--border); background:#FBF9F3; }
+td{ padding: 12px 22px; border-bottom: 1px solid var(--paper-line); color: var(--text); }
+tr:last-child td{ border-bottom:none; }
+
+.tag{ font-size:11.5px; font-weight:600; padding:3px 9px; border-radius:20px; display:inline-block; }
+.tag.green{ background:#EAF2EC; color: var(--chalk-dk); }
+.tag.amber{ background:#FBEFE0; color: var(--marigold-dk); }
+.tag.red{ background:#FBEAE8; color: var(--margin-red); }
+.tag.grey{ background:#EFECE3; color: var(--text-soft); }
+
+.list-simple{ list-style:none; margin:0; padding:0; }
+.list-simple li{ padding: 13px 22px; border-bottom: 1px solid var(--paper-line); font-size: 14px; display:flex; justify-content:space-between; gap: 10px; }
+.list-simple li:last-child{ border-bottom:none; }
+.list-simple .meta{ font-size:12px; color: var(--text-soft); }
+
+.progress{ height:8px; border-radius:6px; background:#EFEAD9; overflow:hidden; }
+.progress > div{ height:100%; background: var(--chalk); }
+
+.chip-row{ display:flex; gap:8px; flex-wrap:wrap; }
+.chip{ font-size:12.5px; padding: 6px 12px; border-radius: 20px; border:1px solid var(--border); background:#FBF9F3; color: var(--text-soft); cursor:pointer; }
+.chip.active{ background: var(--ink); border-color: var(--ink); color:#fff; }
+
+.form-grid{ display:grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 720px){ .form-grid{ grid-template-columns: 1fr; } }
+label{ font-size:13px; font-weight:600; color: var(--ink); display:block; margin-bottom:6px; }
+input, select, textarea{
+  width:100%; padding: 10px 12px; border:1.5px solid var(--border); border-radius:7px;
+  font-family:'Inter',sans-serif; font-size:14px; background:#fff; color: var(--text);
+}
+input:focus, select:focus, textarea:focus{ outline:none; border-color: var(--chalk); }
+.field{ margin-bottom: 16px; }
+
+.bar-chart{ display:flex; align-items:flex-end; gap: 10px; height: 160px; padding: 0 4px; }
+.bar-chart .bar-wrap{ flex:1; display:flex; flex-direction:column; align-items:center; gap:8px; height:100%; justify-content:flex-end; }
+.bar-chart .bar{ width: 100%; max-width: 34px; border-radius: 5px 5px 0 0; background: var(--chalk); }
+.bar-chart .bar.alt{ background: var(--marigold); }
+.bar-chart .bar-label{ font-size: 11px; color: var(--text-soft); }
+
+.badge-circle{ width:64px; height:64px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Fraunces',serif; font-weight:700; font-size:18px; color:#fff; }
+
+.timetable{ display:grid; grid-template-columns: 70px repeat(5, 1fr); border:1px solid var(--border); border-radius: var(--radius-m); overflow:hidden; font-size:12.5px; }
+.timetable > div{ padding: 10px 8px; border-bottom:1px solid var(--paper-line); border-right:1px solid var(--paper-line); }
+.timetable > div:nth-child(6n){ border-right:none; }
+.timetable .head{ background:#FBF9F3; font-weight:700; color: var(--ink); text-align:center; }
+.timetable .slot{ background:#fff; }
+.timetable .slot .subj{ font-weight:600; color: var(--ink); display:block; }
+.timetable .slot .room{ color: var(--text-soft); font-size:11px; }
+.timetable .time{ background:#FBF9F3; color: var(--text-soft); font-weight:600; display:flex; align-items:center; justify-content:center; }
+
+.modal-note{ background:#FBF3E4; border:1px dashed #E7C980; color:#8A5A0F; font-size:13px; padding: 12px 16px; border-radius:8px; margin-bottom:18px; }
+
+@media (max-width: 640px){
+  .card-head, .card-pad{ padding-left:16px; padding-right:16px; }
+  .se-form-grid{ grid-template-columns:1fr; }
+  .se-form-grid .span-2{ grid-column:auto; }
+  .se-modal{ padding:22px 18px 20px; max-height:calc(100vh - 28px); }
+  .se-modal-actions{ flex-direction:column-reverse; }
+  .se-modal-actions .btn{ width:100%; justify-content:center; }
+  .chat-body{ padding-left:16px; padding-right:16px; }
+  .chat-form{ padding-left:16px; padding-right:16px; }
+  .msg{ max-width:90%; }
+}
+
+/* ---------- toast notification (SMS-to-parent mock) ---------- */
+.toast-stack{
+  position: fixed; right: 20px; bottom: 20px; z-index: 200;
+  display:flex; flex-direction:column; gap:10px; width: min(340px, calc(100vw - 40px));
+}
+.toast{
+  background: var(--ink); color:#fff; border-radius: 10px; padding: 13px 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.22); display:flex; gap:11px; align-items:flex-start;
+  border-left: 4px solid var(--chalk);
+  animation: toast-in .22s ease-out;
+}
+.toast .toast-icon{ font-size:18px; line-height:1; flex-shrink:0; margin-top:1px; }
+.toast .toast-title{ font-size:13px; font-weight:700; margin-bottom:3px; color:#fff; }
+.toast .toast-body{ font-size:12.5px; color:#C9D1E3; line-height:1.4; }
+@keyframes toast-in{ from{ opacity:0; transform: translateY(8px);} to{ opacity:1; transform:none; } }
+
+@media (max-width: 900px){
+  .kpi-row{ grid-template-columns: 1fr 1fr; }
+}
+
+/* ---------- generic modal (Add Student, etc.) ---------- */
+.se-modal-backdrop{
+  position:fixed; inset:0; background: rgba(27,42,74,.46); backdrop-filter: blur(2px);
+  display:flex; align-items:center; justify-content:center; z-index: 300;
+  opacity:0; transition: opacity .18s ease; padding: 20px;
+}
+.se-modal-backdrop.open{ opacity:1; }
+.se-modal-backdrop[hidden]{ display:none; }
+.se-modal{
+  background:#fff; border-radius:14px; width: min(520px, 100%); max-height: 88vh;
+  overflow-y:auto; padding: 24px 26px 22px; position:relative; box-shadow: 0 20px 60px rgba(0,0,0,.28);
+  transform: translateY(10px) scale(.98); opacity:0; transition: transform .18s ease, opacity .18s ease;
+}
+.se-modal-backdrop.open .se-modal{ transform: translateY(0) scale(1); opacity:1; }
+.se-modal h2{ font-size:19px; margin: 2px 0 16px; padding-right:24px; }
+.se-modal-close{
+  position:absolute; top:14px; right:14px; width:30px; height:30px; border-radius:50%;
+  border:none; background: var(--border, #eee); font-size:16px; cursor:pointer; line-height:1;
+}
+.se-modal-close:hover{ background: var(--marigold, #f0b84e); }
+.se-form-grid{ display:grid; grid-template-columns: 1fr 1fr; gap: 12px 14px; margin-bottom: 6px; }
+.se-form-grid .span-2{ grid-column: 1 / -1; }
+.se-form-grid label{ display:block; font-size:12px; font-weight:600; margin-bottom:5px; color: var(--ink-soft, #566); }
+.se-form-grid input, .se-form-grid select{
+  width:100%; padding:9px 11px; border-radius:8px; border:1px solid var(--border, #ddd); font-size:13.5px;
+}
+.se-modal-error{
+  background:#fdecec; color:#b02a2a; border-radius:8px; padding:9px 12px; font-size:13px; margin-bottom:14px;
+}
+.se-modal-success{ text-align:center; padding: 10px 0; }
+.se-modal-success .se-pw{
+  font-family: monospace; font-size:18px; font-weight:700; background: var(--paper, #f6f3ec);
+  border-radius:8px; padding:10px 14px; display:inline-block; margin: 12px 0; letter-spacing:.5px;
+}
+.se-modal-actions{ display:flex; justify-content:flex-end; gap:10px; margin-top:18px; }

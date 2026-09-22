@@ -1,0 +1,20 @@
+/* ============================================================
+   Skilling quiz, study-plan checklist, tutor progress panel.
+   ============================================================ */
+
+.quiz-card{ border-color: var(--ink); }
+.quiz-q{ margin-bottom: 18px; }
+.quiz-q-text{ font-weight:600; margin: 0 0 8px; }
+.quiz-opts{ display:flex; flex-direction:column; gap:6px; }
+.quiz-opt{ display:flex; align-items:center; gap:8px; font-size:14px; padding:8px 10px; border:1px solid var(--border); border-radius:8px; cursor:pointer; }
+.quiz-opt:hover{ background:#FBF9F3; }
+.quiz-opt input{ margin:0; }
+
+.skill-card .list-simple li{ align-items:center; }
+
+.plan-item{ display:flex; align-items:center; gap:8px; cursor:pointer; }
+.plan-item input{ margin:0; }
+
+@media (max-width: 980px){
+  .chat-card + .card{ margin-top:20px; }
+}

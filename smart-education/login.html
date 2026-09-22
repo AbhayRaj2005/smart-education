@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sign in — Smart Education</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 34'%3E%3Crect width='34' height='34' rx='7' fill='%23E2A73B'/%3E%3Ctext x='17' y='23' font-family='Georgia,serif' font-weight='700' font-size='16' fill='%231B2A4A' text-anchor='middle'%3ESE%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/components.css">
+<link rel="stylesheet" href="assets/css/app.css">
+<link rel="stylesheet" href="assets/css/auth.css">
+</head>
+<body>
+
+<div class="auth">
+
+  <aside class="auth-side">
+    <div>
+      <div class="brand">
+        <div class="brand-mark">SE</div>
+        <div class="brand-name"><span data-i18n="app.name">Smart Education</span><small data-i18n="app.tagline">School Operating System</small></div>
+      </div>
+      <h2 style="margin-top:34px" data-i18n="login.title">Sign in to Smart Education</h2>
+      <p data-i18n="login.subtitle">Choose your portal, then sign in with the ID your school issued you.</p>
+
+      <div class="auth-roles">
+        <div class="auth-role"><span>01</span><span><strong data-i18n="login.role.admin">Admin</strong><span data-i18n="login.desc.admin">Enrolment, staff, fees and school-wide reports</span></span></div>
+        <div class="auth-role"><span>02</span><span><strong data-i18n="login.role.teacher">Teacher</strong><span data-i18n="login.desc.teacher">Attendance, gradebook, syllabus and lesson plans</span></span></div>
+        <div class="auth-role"><span>03</span><span><strong data-i18n="login.role.student">Student</strong><span data-i18n="login.desc.student">Details, marks, attendance, syllabus, fees and the AI tutor</span></span></div>
+      </div>
+    </div>
+    <div class="auth-side-foot" data-i18n="app.school">Saraswati Vidya Mandir, Kolkata</div>
+  </aside>
+
+  <main class="auth-main">
+    <div class="auth-top">
+      <a class="auth-back" href="index.html" data-i18n="login.back">← Back to home</a>
+      <div id="loginLang"></div>
+    </div>
+
+    <div class="auth-card">
+      <div class="resume-banner" id="resumeBanner" hidden></div>
+
+      <h1 data-i18n="login.title">Sign in to Smart Education</h1>
+      <p data-i18n="login.subtitle">Choose your portal, then sign in with the ID your school issued you.</p>
+
+      <label data-i18n="login.role">I am signing in as</label>
+      <div class="role-tabs">
+        <button type="button" class="role-tab" data-role="admin" data-i18n="login.role.admin">Admin</button>
+        <button type="button" class="role-tab active" data-role="teacher" data-i18n="login.role.teacher">Teacher</button>
+        <button type="button" class="role-tab" data-role="student" data-i18n="login.role.student">Student</button>
+      </div>
+
+      <div class="auth-error" id="loginError" hidden></div>
+
+      <form id="loginForm" novalidate>
+        <div class="field">
+          <label for="loginId" data-i18n="login.id">User ID</label>
+          <input id="loginId" type="text" autocomplete="username" spellcheck="false">
+        </div>
+        <div class="field">
+          <label for="loginPw" data-i18n="login.password">Password</label>
+          <div class="pw-wrap">
+            <input id="loginPw" type="password" autocomplete="current-password">
+            <button type="button" class="pw-peek" id="pwPeek" data-i18n="login.show">Show</button>
+          </div>
+        </div>
+        <button class="btn btn-primary btn-block" type="submit" data-i18n="login.submit">Sign in</button>
+      </form>
+
+      <button type="button" class="link-btn forgot-link" id="forgotLink" data-i18n="login.forgot">Forgot password?</button>
+
+      <p class="lang-note" data-i18n="login.langNote">You can switch between English and Hindi here, or any time from inside your portal.</p>
+
+      <div class="demo-box" id="demoBox"></div>
+    </div>
+  </main>
+
+</div>
+
+<div class="modal-backdrop" id="fpBackdrop" hidden>
+  <div class="modal fp-modal" role="dialog" aria-modal="true" aria-labelledby="fpTitle">
+    <button type="button" class="modal-close" id="fpClose" aria-label="Close">&times;</button>
+
+    <div class="fp-steps">
+      <span class="fp-dot active" data-step="1"></span>
+      <span class="fp-dot" data-step="2"></span>
+      <span class="fp-dot" data-step="3"></span>
+    </div>
+
+    <h2 id="fpTitle" data-i18n="fp.title">Reset your password</h2>
+
+    <div class="auth-error" id="fpError" hidden></div>
+
+    <!-- step 1: id + email -->
+    <form class="fp-panel" id="fpStep1">
+      <p data-i18n="fp.step1.body">Enter the ID you sign in with and your email address.</p>
+      <div class="field">
+        <label for="fpId" data-i18n="login.id">User ID</label>
+        <input id="fpId" type="text" autocomplete="username" spellcheck="false">
+      </div>
+      <div class="field">
+        <label for="fpEmail" data-i18n="fp.email">Email address</label>
+        <input id="fpEmail" type="email" autocomplete="email" data-i18n-ph="fp.email.ph" placeholder="you@example.com">
+      </div>
+      <button class="btn btn-primary btn-block" type="submit" id="fpSendBtn" data-i18n="fp.send">Send code</button>
+    </form>
+
+    <!-- step 2: otp -->
+    <form class="fp-panel" id="fpStep2" hidden>
+      <p id="fpStep2Body" data-i18n="fp.step2.body">We sent a 6-digit code to {email}. It expires in 10 minutes.</p>
+      <div class="field">
+        <label for="fpOtp" data-i18n="fp.step2.title">Enter the code</label>
+        <input id="fpOtp" type="text" inputmode="numeric" maxlength="6" data-i18n-ph="fp.otp.ph" placeholder="6-digit code">
+      </div>
+      <button class="btn btn-primary btn-block" type="submit" id="fpVerifyBtn" data-i18n="fp.verify">Verify code</button>
+      <div class="fp-links">
+        <button type="button" class="link-btn" id="fpBackTo1" data-i18n="fp.back">Back</button>
+        <button type="button" class="link-btn" id="fpResend" data-i18n="fp.resend">Resend code</button>
+      </div>
+    </form>
+
+    <!-- step 3: new password -->
+    <form class="fp-panel" id="fpStep3" hidden>
+      <p data-i18n="fp.step3.title">Choose a new password</p>
+      <div class="field">
+        <label for="fpPw1" data-i18n="fp.newpw">New password</label>
+        <input id="fpPw1" type="password" autocomplete="new-password">
+      </div>
+      <div class="field">
+        <label for="fpPw2" data-i18n="fp.newpw2">Confirm new password</label>
+        <input id="fpPw2" type="password" autocomplete="new-password">
+      </div>
+      <button class="btn btn-primary btn-block" type="submit" id="fpSaveBtn" data-i18n="fp.save">Change password</button>
+    </form>
+
+    <!-- step 4: success -->
+    <div class="fp-panel fp-success" id="fpDone" hidden>
+      <div class="fp-check">✓</div>
+      <p data-i18n="fp.success">Your password has been changed. Sign in with your new password.</p>
+      <button class="btn btn-primary btn-block" type="button" id="fpCloseDone" data-i18n="fp.close">Close</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script src="assets/js/core/config.js"></script>
+<script src="assets/js/core/i18n.js"></script>
+<script src="assets/js/data/school-data.js"></script>
+<script src="assets/js/core/backend.js"></script>
+<script src="assets/js/data/api.js"></script>
+<script src="assets/js/core/store.js"></script>
+<script src="assets/js/core/auth.js"></script>
+<script src="assets/js/core/ui.js"></script>
+<script src="assets/js/pages/login.js"></script>
+<script src="assets/js/pages/forgot-password.js"></script>
+</body>
+</html>

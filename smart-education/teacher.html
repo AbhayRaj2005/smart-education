@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Educator Portal — Smart Education</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 34'%3E%3Crect width='34' height='34' rx='7' fill='%23E2A73B'/%3E%3Ctext x='17' y='23' font-family='Georgia,serif' font-weight='700' font-size='16' fill='%231B2A4A' text-anchor='middle'%3ESE%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/portal.css">
+<link rel="stylesheet" href="assets/css/components.css">
+<link rel="stylesheet" href="assets/css/app.css">
+<link rel="stylesheet" href="assets/css/notices.css">
+</head>
+<body>
+<div class="portal">
+
+  <aside class="side" id="side">
+    <div class="brand">
+      <div class="brand-mark">SE</div>
+      <div class="brand-name"><span data-i18n="app.name">Smart Education</span><small data-i18n="app.tagline">School Operating System</small></div>
+    </div>
+    <nav id="sideNav"></nav>
+    <div class="side-foot" id="sideFoot"></div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar-portal">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <button class="portal-mobile-toggle" id="portalToggle" aria-label="Menu">&#9776;</button>
+        <h1 id="pageTitle"></h1>
+      </div>
+      <div class="user-chip" id="topRight"></div>
+    </div>
+    <div class="content" id="content"></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/js/core/config.js"></script>
+<script src="assets/js/core/i18n.js"></script>
+<script src="assets/js/data/school-data.js"></script>
+<script src="assets/js/core/backend.js"></script>
+<script src="assets/js/data/api.js"></script>
+<script src="assets/js/core/store.js"></script>
+<script src="assets/js/core/auth.js"></script>
+<script src="assets/js/core/ui.js"></script>
+<script src="assets/js/modules/sms.js"></script>
+<script src="assets/js/modules/attendance.js"></script>
+<script src="assets/js/modules/gradebook.js"></script>
+<script src="assets/js/modules/syllabus.js"></script>
+<script src="assets/js/modules/fees.js"></script>
+<script src="assets/js/modules/timetable.js"></script>
+<script src="assets/js/modules/notices.js"></script>
+<script src="assets/js/modules/teachers.js"></script>
+<script src="assets/js/modules/student-record.js"></script>
+<script src="assets/js/modules/assessment.js"></script>
+<script src="assets/js/pages/teacher.js"></script>
+</body>
+</html>

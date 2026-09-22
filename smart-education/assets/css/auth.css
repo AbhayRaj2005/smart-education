@@ -1,0 +1,157 @@
+/* ============================================================
+   Smart Education — AUTH module
+   The sign-in screen: role tabs, credentials, language choice.
+   ============================================================ */
+
+.auth{ min-height:100vh; display:grid; grid-template-columns: 1.05fr 1fr; }
+@media (max-width: 900px){ .auth{ grid-template-columns:1fr; } }
+
+/* left: the register cover */
+.auth-side{
+  background: var(--ink); color:#fff; padding: 48px 44px;
+  display:flex; flex-direction:column; justify-content:space-between;
+}
+.auth-side h2{ color:#fff; font-size:30px; max-width: 16ch; }
+.auth-side p{ color:#C9D1E3; max-width: 42ch; font-size:14.5px; }
+.auth-roles{ display:flex; flex-direction:column; gap:12px; margin-top: 26px; }
+.auth-role{
+  display:flex; gap:12px; align-items:center; padding:13px 16px;
+  border:1px solid rgba(255,255,255,.14); border-radius:9px; font-size:13.5px; color:#C9D1E3;
+}
+.auth-role strong{ color:#fff; display:block; font-size:14px; }
+.auth-side-foot{ color:#8D9AB5; font-size:12.5px; }
+@media (max-width: 900px){ .auth-side{ padding: 30px 24px; } .auth-side h2{ font-size:24px; } }
+
+@media (max-width: 520px){
+  .auth-side{ padding:24px 18px; }
+  .auth-main{ padding-left:16px; padding-right:16px; }
+  .auth-top{ margin-bottom:24px; }
+  .role-tabs{ gap:5px; }
+  .role-tab{ padding-left:4px; padding-right:4px; font-size:12.5px; }
+  .modal{ padding:24px 18px 20px; max-height:calc(100vh - 24px); overflow-y:auto; }
+}
+
+/* right: the form */
+.auth-main{ padding: 44px; display:flex; flex-direction:column; }
+@media (max-width: 900px){ .auth-main{ padding: 28px 22px 48px; } }
+.auth-top{ display:flex; justify-content:space-between; align-items:center; margin-bottom: 34px; gap:14px; flex-wrap:wrap; }
+.auth-back{ font-size:13.5px; color: var(--text-soft); }
+.auth-card{ width:100%; max-width: 420px; margin: auto 0; }
+.auth-card h1{ font-size:26px; }
+.auth-card > p{ font-size:14px; margin-bottom: 24px; }
+
+.role-tabs{ display:grid; grid-template-columns: repeat(3,1fr); gap:8px; margin-bottom: 22px; }
+.role-tab{
+  padding: 11px 8px; border:1.5px solid var(--border); background:#fff; border-radius:8px;
+  font-family:'Inter',sans-serif; font-size:13.5px; font-weight:600; color: var(--text-soft); cursor:pointer;
+}
+.role-tab.active{ border-color: var(--ink); background: var(--ink); color:#fff; }
+
+.pw-wrap{ position:relative; }
+.pw-wrap input{ padding-right: 68px; }
+.pw-peek{
+  position:absolute; right:8px; top:50%; transform:translateY(-50%);
+  background:transparent; border:none; cursor:pointer; font-size:12.5px; font-weight:600; color: var(--chalk-dk);
+  font-family:'Inter',sans-serif; padding:6px 8px;
+}
+
+.auth-error{
+  background:#FBEAE8; border:1px solid #EFC9C3; color: var(--margin-red);
+  font-size:13px; padding:10px 14px; border-radius:8px; margin-bottom:16px;
+}
+
+.lang-note{ font-size:12.5px; color: var(--text-soft); margin: 14px 0 0; }
+
+.demo-box{
+  margin-top: 26px; border:1px dashed var(--border); border-radius:10px;
+  padding:16px 18px; background:#FBF9F3;
+}
+.demo-head{ font-size:12.5px; font-weight:700; color: var(--ink); margin-bottom:6px; }
+.demo-hint{ font-size:12.5px; color: var(--text-soft); margin:0 0 12px; }
+.demo-list{ list-style:none; margin:0 0 12px; padding:0; display:flex; flex-direction:column; gap:7px; }
+.demo-list li{ display:flex; align-items:center; gap:10px; font-size:12.5px; color: var(--text-soft); }
+.demo-fill{
+  font-family:'Inter',sans-serif; font-size:12px; font-weight:700; color: var(--ink);
+  background:#fff; border:1px solid var(--border); border-radius:6px; padding:4px 9px; cursor:pointer; flex-shrink:0;
+}
+.demo-fill:hover{ background: var(--marigold); }
+.demo-pw{ font-size:12.5px; color: var(--text-soft); }
+.demo-pw code{ background:#fff; border:1px solid var(--border); border-radius:5px; padding:2px 7px; color: var(--ink); }
+
+.resume-banner{
+  display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+  background:#EAF2EC; border:1px solid #CADDD0; border-radius:9px;
+  padding:12px 16px; font-size:13px; margin-bottom:20px;
+}
+
+/* ============================================================
+   "Forgot password?" link + modal
+   ============================================================ */
+
+.link-btn{
+  background:none; border:none; padding:0; cursor:pointer;
+  font-family:'Inter',sans-serif; font-size:13px; font-weight:600;
+  color: var(--chalk-dk); text-decoration: underline; text-underline-offset:3px;
+}
+.link-btn:hover{ color: var(--ink); }
+.forgot-link{ display:block; margin-top:14px; }
+
+.modal-backdrop{
+  position:fixed; inset:0; background: rgba(27,42,74,.46); backdrop-filter: blur(2px);
+  display:flex; align-items:center; justify-content:center; padding:18px; z-index:80;
+  opacity:0; transition: opacity .18s ease;
+}
+.modal-backdrop.open{ opacity:1; }
+.modal-backdrop[hidden]{ display:none; }
+
+.modal{
+  background:#fff; border-radius:14px; width:100%; max-width:420px; padding:30px 28px 26px;
+  position:relative; box-shadow: 0 24px 60px rgba(27,42,74,.28);
+  transform: translateY(14px) scale(.98); opacity:0; transition: transform .2s ease, opacity .2s ease;
+}
+.modal-backdrop.open .modal{ transform: translateY(0) scale(1); opacity:1; }
+
+.modal-close{
+  position:absolute; top:14px; right:14px; width:30px; height:30px; border-radius:50%;
+  border:none; background:#F3F0E6; color: var(--text-soft); font-size:18px; line-height:1; cursor:pointer;
+}
+.modal-close:hover{ background: var(--marigold); color: var(--ink); }
+
+.fp-modal h2{ font-size:21px; margin:2px 0 18px; padding-right:20px; }
+
+.fp-steps{ display:flex; gap:6px; margin-bottom:16px; }
+.fp-dot{ height:4px; flex:1; border-radius:3px; background: var(--border); transition: background .2s ease; }
+.fp-dot.active{ background: var(--chalk); }
+
+.fp-panel p{ font-size:13.5px; margin:0 0 16px; }
+.fp-panel[hidden]{ display:none; }
+.fp-panel, .fp-success{ animation: fp-fade .22s ease; }
+
+.fp-links{ display:flex; justify-content:space-between; margin-top:14px; }
+
+.fp-success{ text-align:center; }
+.fp-check{
+  width:52px; height:52px; border-radius:50%; background: var(--chalk); color:#fff;
+  display:flex; align-items:center; justify-content:center; font-size:26px; margin:4px auto 16px;
+  animation: fp-pop .35s cubic-bezier(.2,1.6,.4,1);
+}
+
+@keyframes fp-fade{ from{ opacity:0; transform: translateY(6px); } to{ opacity:1; transform:none; } }
+@keyframes fp-pop{ from{ transform: scale(.4); opacity:0; } to{ transform: scale(1); opacity:1; } }
+
+/* ============================================================
+   Login page: gentle entrance + a livelier submit button
+   ============================================================ */
+
+.auth-side{ animation: fp-slide-l .5s cubic-bezier(.2,.8,.2,1); }
+.auth-main .auth-card{ animation: fp-slide-r .5s cubic-bezier(.2,.8,.2,1); }
+
+@keyframes fp-slide-l{ from{ opacity:0; transform: translateX(-16px);} to{ opacity:1; transform:none; } }
+@keyframes fp-slide-r{ from{ opacity:0; transform: translateX(16px);} to{ opacity:1; transform:none; } }
+
+.role-tab{ transition: background .15s ease, border-color .15s ease, transform .1s ease; }
+.role-tab:active{ transform: scale(.97); }
+
+.btn-primary.btn-block{ transition: transform .12s ease, box-shadow .12s ease, background .15s ease; }
+.btn-primary.btn-block:hover{ box-shadow: 0 8px 20px rgba(27,42,74,.22); transform: translateY(-1px); }
+.btn-primary.btn-block:active{ transform: translateY(0); }

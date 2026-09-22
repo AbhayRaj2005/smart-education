@@ -1,0 +1,113 @@
+/* ============================================================
+   Smart Education — APP module
+   Styles for the module-rendered portal views: view headers,
+   roll call, rosters, records, class cards, language switch.
+   Loaded after components.css.
+   ============================================================ */
+
+/* ---------- language switch ---------- */
+.lang-switch{ display:inline-flex; border:1.5px solid var(--border); border-radius:20px; overflow:hidden; background:#fff; }
+.lang-opt{
+  border:none; background:transparent; cursor:pointer; padding:6px 14px;
+  font-family:'Inter',sans-serif; font-size:12.5px; font-weight:600; color: var(--text-soft);
+}
+.lang-opt.active{ background: var(--ink); color:#fff; }
+.lang-opt + .lang-opt{ border-left:1px solid var(--border); }
+
+/* ---------- sidebar identity ---------- */
+.side-user{ display:flex; gap:10px; align-items:center; }
+.side-user-name{ color:#fff; font-size:13.5px; font-weight:600; }
+.side-out{
+  margin-top:12px; width:100%; background:transparent; color:#C9D1E3;
+  border:1px solid rgba(255,255,255,.18); border-radius:7px; padding:8px 10px;
+  font-family:'Inter',sans-serif; font-size:13px; font-weight:600; cursor:pointer;
+}
+.side-out:hover{ background: rgba(255,255,255,.08); color:#fff; }
+.avatar-sm{ width:30px; height:30px; font-size:13px; }
+.avatar-lg{ width:54px; height:54px; font-size:20px; }
+
+/* ---------- view header ---------- */
+.view-head{
+  display:flex; align-items:flex-end; justify-content:space-between; gap:18px;
+  flex-wrap:wrap; margin-bottom:20px;
+}
+.view-title{ font-size:22px; margin:0 0 4px; }
+.view-sub{ margin:0; font-size:13.5px; color: var(--text-soft); }
+.view-controls{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+.view-controls label{ margin:0; font-size:12.5px; color: var(--text-soft); }
+.class-select{
+  width:auto; min-width:170px; padding:9px 12px; border:1.5px solid var(--border);
+  border-radius:7px; background:#fff; font-family:'Inter',sans-serif; font-size:13.5px;
+}
+
+/* ---------- layout helpers ---------- */
+.grid-2{ display:grid; grid-template-columns:1fr 1fr; gap:20px; align-items:start; }
+@media (max-width: 980px){ .grid-2{ grid-template-columns:1fr; } }
+.stack-top{ margin-top:22px; }
+.btn-row{ display:flex; gap:10px; flex-wrap:wrap; }
+.empty-note{ color: var(--text-soft); font-size:14px; }
+.cell-sub{ font-size:12px; color: var(--text-soft); margin-top:2px; }
+.nowrap{ white-space:nowrap; }
+.msg-cell{ max-width:420px; font-size:13px; color: var(--text-soft); }
+.cell-person{ display:flex; align-items:center; gap:10px; }
+.pill-mini{
+  display:inline-block; font-size:11.5px; padding:2px 8px; margin:2px 4px 2px 0;
+  border-radius:20px; background:#F3EFE2; color: var(--text-soft); border:1px solid var(--border);
+}
+.back-btn{ margin-bottom:16px; }
+
+/* ---------- class cards ---------- */
+.class-grid{ display:grid; grid-template-columns: repeat(auto-fill, minmax(230px,1fr)); gap:16px; margin-bottom:22px; }
+.class-card{
+  text-align:left; background: var(--card); border:1px solid var(--border);
+  border-radius: var(--radius-m); padding:18px; cursor:pointer;
+  display:flex; flex-direction:column; gap:7px; align-items:flex-start;
+  font-family:'Inter',sans-serif;
+}
+.class-card:hover{ border-color: var(--ink); }
+.class-card-name{ font-family:'Fraunces',serif; font-size:18px; color: var(--ink); font-weight:600; }
+.class-card-meta{ font-size:12.5px; color: var(--text-soft); }
+
+/* ---------- roll call ---------- */
+.roster-meta{
+  display:flex; gap:20px; flex-wrap:wrap; padding:12px 22px; background:#FBF9F3;
+  border-bottom:1px solid var(--border); font-size:12.5px; color: var(--text-soft);
+}
+.roster-meta strong{ color: var(--ink); }
+.roll-list li{ align-items:center; }
+.roll-id{ display:flex; align-items:center; gap:12px; min-width:0; }
+.roll-no{
+  width:28px; height:28px; border-radius:6px; background:#F3EFE2; color: var(--ink);
+  display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; flex-shrink:0;
+}
+.roll-name{ display:flex; flex-direction:column; line-height:1.3; }
+.roll-name .meta{ font-size:11.5px; }
+.att-chips{ display:flex; gap:6px; flex-shrink:0; }
+.att-chip{ padding:6px 12px; font-weight:600; }
+.att-chip.att-present.active{ background: var(--chalk); border-color: var(--chalk); color:#fff; }
+.att-chip.att-absent.active{ background: var(--margin-red); border-color: var(--margin-red); color:#fff; }
+.att-chip.att-late.active{ background: var(--marigold); border-color: var(--marigold-dk); color: var(--ink); }
+
+@media (max-width: 640px){
+  .roll-list li{ flex-direction:column; align-items:flex-start; gap:10px; }
+  .att-chips{ width:100%; }
+  .att-chip{ flex:1; justify-content:center; text-align:center; }
+}
+
+/* ---------- record ---------- */
+.id-head{ display:flex; gap:14px; align-items:center; margin-bottom:18px; }
+.id-name{ margin:0; font-size:19px; }
+.detail-list{ margin:0; display:grid; grid-template-columns:1fr 1fr; gap:14px 20px; }
+@media (max-width: 640px){ .detail-list{ grid-template-columns:1fr; } }
+.detail-list dt{ font-size:11.5px; color: var(--text-soft); margin-bottom:3px; }
+.detail-list dd{ margin:0; font-size:14px; color: var(--ink); font-weight:500; }
+
+.fee-figures{ display:grid; grid-template-columns: repeat(3,1fr); gap:14px; }
+.fee-figures span{ display:block; font-size:12px; color: var(--text-soft); margin-bottom:4px; }
+.fee-figures strong{ font-family:'Fraunces',serif; font-size:20px; color: var(--ink); }
+.progress.mini{ height:6px; width:110px; }
+
+.mark-input{ width:70px; padding:6px 8px; }
+
+/* ---------- toasts ---------- */
+.toast-absent{ border-left-color: var(--margin-red); }
