@@ -16,7 +16,7 @@ window.SE_CONFIG = {
   demo: false,
 
     supabaseUrl: 'https://tnzimqhdasatxbixkjzr.supabase.co',          // e.g. 'https://abcdefgh.supabase.co'
-  supabaseAnonKey: 'sb_publishable_lBCz7dRW6DthIJsw7g6VCQ_Q5FR7wQV',      // Project settings → API → anon public
+  supabaseAnonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRuemltcWhkYXNhdHhiaXhranpyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAwNzIxOTAsImV4cCI6MjEwNTY0ODE5MH0.cfCOHuPn0PBzi_MFWhnOHZ0t1QdeJQU5MRcj_VOdISY',      // Project settings → API → anon public
 
   // Supabase auth needs an email, so the login screen turns the
   // user ID into one: TCH-01 → tch-01@smarteducation.internal
